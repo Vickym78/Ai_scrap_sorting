@@ -1,5 +1,3 @@
-
-```markdown
 # 📊 Performance Report: Scrap Material Classifier
 
 This report summarizes the performance of the trained material classification model, providing a visual overview and key insights.
@@ -16,13 +14,13 @@ The project successfully developed an end-to-end pipeline for real-time scrap cl
 
 The following metrics were calculated on the unseen validation dataset.
 
-| Metric | Average Score | Interpretation |
-| :--- | :---: | :--- |
-| **Accuracy** | **~90%** | The overall percentage of items the model identified correctly. |
-| **Precision** | **~90%** | When the model predicts a class, it is correct about 90% of the time. |
-| **Recall** | **~90%** | The model correctly finds and identifies about 90% of all items for a given class. |
+| Metric       | Average Score | Interpretation                                                       |
+|--------------|:-------------:|----------------------------------------------------------------------|
+| **Accuracy** |    **~90%**   | Overall percentage of correctly classified items.                   |
+| **Precision**|    **~90%**   | When the model predicts a class, it is correct 90% of the time.     |
+| **Recall**   |    **~90%**   | Model correctly identifies 90% of the actual items in each class.   |
 
-*(Note: These are representative values. The exact metrics are printed to the console at the end of the `02_train_model.py` script execution.)*
+> 📌 *Note: These are approximate values. Exact metrics are printed to the console during `02_train_model.py` execution.*
 
 ---
 
@@ -30,27 +28,27 @@ The following metrics were calculated on the unseen validation dataset.
 
 The confusion matrix below provides a detailed breakdown of the model's predictions versus the actual labels.
 
+![Confusion Matrix](./results/confusion_matrix.png)
 
-*(This image, `confusion_matrix.png`, is automatically generated and saved in the `/results` folder when you run the training script.)*
+> 📁 *The above image is saved to `/results/confusion_matrix.png` automatically during training.*
 
-### **Insights from the Matrix:**
-
-* **Excellent Performance**: The strong diagonal line from top-left to bottom-right shows that the vast majority of predictions were correct for all classes.
-* **High-Confidence Classes**: The model is extremely accurate at identifying materials with unique visual features, such as **`glass`** and **`metal`**.
-* **Primary Point of Confusion**: The most significant errors occur where the model misclassifies **`paper`** as **`cardboard`**, and vice-versa. This is an expected challenge due to their similar textures, colors, and compositions.
+### **Insights:**
+- ✅ **Excellent Performance**: Strong diagonal indicates high accuracy.
+- 🔎 **High-Confidence Classes**: Materials like `glass` and `metal` are rarely misclassified.
+- ⚠️ **Challenge Area**: `Paper` vs `Cardboard` — most misclassifications due to visual similarity.
 
 ---
 
 ## 💡 Key Takeaways & Next Steps
 
-### ✅ **What Worked Well**
+### ✅ What Worked Well
 
-1.  **Effective Transfer Learning**: Using a pre-trained ResNet18 model was a highly successful strategy, enabling excellent performance with minimal training time.
-2.  **Seamless Deployment**: The conversion to ONNX was straightforward and produced a fast, efficient model ideal for the real-time simulation.
-3.  **Robust Simulation**: The simulation loop correctly logs classifications, confidence scores, and flags uncertain predictions, proving the pipeline's end-to-end functionality.
+1. **Effective Transfer Learning** – ResNet18 performed well with minimal fine-tuning.
+2. **ONNX Export** – Model was successfully exported to ONNX for lightweight deployment.
+3. **Real-Time Simulation** – End-to-end logic works: logs predictions and flags low-confidence cases.
 
-### ➡️ **Recommendations for Improvement**
+### ➡️ Recommendations
 
-1.  **Targeted Data Augmentation**: To resolve the paper/cardboard confusion, future work should focus on sourcing more images of these classes and applying more varied data augmentation techniques (e.g., color jitter, random cropping, varied lighting).
-2.  **Model Fine-Tuning**: A next step would be to unfreeze more layers of the ResNet18 model and retrain it with a much lower learning rate. This would allow the model to adapt its deeper feature-extracting capabilities more specifically to the nuances of scrap materials.
-3.  **Implement Active Learning Loop**: The "low confidence" flag in the simulation can be used to queue images for manual labeling. Periodically retraining the model on these "hard examples" would continuously improve its performance over time.
+1. **Data Augmentation** – Add more images of confusing classes and apply stronger augmentations.
+2. **Model Fine-Tuning** – Unfreeze deeper ResNet18 layers and train with a low learning rate.
+3. **Active Learning** – Use uncertain predictions to gather more training data and retrain periodically.
